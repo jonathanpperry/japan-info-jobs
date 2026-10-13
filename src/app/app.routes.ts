@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 import { MigrationPlaceholderPage } from './pages/migration-placeholder.page';
 
-// Legacy routes awaiting migration
+// Remove each path when its real standalone component is migrated.
 const pendingRoutes = [
-  'login',
   'applications',
   'application/:id',
   'apply/:id/:resumeId',
@@ -16,33 +15,20 @@ const pendingRoutes = [
   'firstwithtabs',
   'job',
   'job/:id',
-  'menu',
   'menu/:id',
   'profile',
-  'register',
   'resumes',
   'settings',
   'language-popover',
-  'reset-password',
   'resume/:id',
 ];
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'home',
     loadComponent: () =>
       import('./pages/home/home.page').then((m) => m.HomePage),
-  },
-
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/login/login.page').then((m) => m.LoginPage),
   },
   {
     path: 'login',
@@ -54,8 +40,16 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/register/register.page').then((m) => m.RegisterPage),
   },
-
-  // Temporary routes for pages awaiting migration
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./pages/reset-password/reset-password.page').then((m) => m.ResetPasswordPage),
+  },
+  {
+    path: 'menu',
+    loadComponent: () =>
+      import('./pages/menu/menu.page').then((m) => m.MenuPage),
+  },
   ...pendingRoutes.map((path) => ({
     path,
     component: MigrationPlaceholderPage,
