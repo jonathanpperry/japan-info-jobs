@@ -1,0 +1,147 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>登録</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="form-content ion-padding">
+  <div class="image-container">
+    <img src="assets/images/japan-info.png" alt="Japan Info logo" />
+  </div>
+
+  <div class="center-div">
+    <h3 class="remove-margin">Register</h3>
+  </div>
+
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="12" size-md="8" size-xl="5">
+      <form class="form" [formGroup]="registerForm" (ngSubmit)="tryRegister()">
+        <!-- Name -->
+        <ion-input
+          type="text"
+          label="名前 (Name)"
+          labelPlacement="floating"
+          fill="outline"
+          autocomplete="name"
+          formControlName="name"
+          class="ion-margin-bottom"
+        ></ion-input>
+
+        @if (name.invalid && (name.dirty || name.touched)) {
+        <div class="validation-errors">
+          @if (name.hasError('required')) {
+          <p class="error-message">Name is required.</p>
+          } @else if (name.hasError('pattern')) {
+          <p class="error-message">Please enter a valid name.</p>
+          }
+        </div>
+        }
+
+        <!-- Email -->
+        <ion-input
+          type="email"
+          label="メールアドレス (Email)"
+          labelPlacement="floating"
+          fill="outline"
+          inputmode="email"
+          autocomplete="email"
+          formControlName="email"
+          class="ion-margin-bottom"
+        ></ion-input>
+
+        @if (email.invalid && (email.dirty || email.touched)) {
+        <div class="validation-errors">
+          @if (email.hasError('required')) {
+          <p class="error-message">Email is required.</p>
+          } @else if (email.hasError('email')) {
+          <p class="error-message">Please enter a valid email.</p>
+          }
+        </div>
+        }
+
+        <!-- Password -->
+        <ion-input
+          type="password"
+          label="パスワード (Password)"
+          labelPlacement="floating"
+          fill="outline"
+          autocomplete="new-password"
+          formControlName="password"
+          class="ion-margin-bottom"
+        ></ion-input>
+
+        @if ( password.invalid && (password.dirty || password.touched) ) {
+        <div class="validation-errors">
+          @if (password.hasError('required')) {
+          <p class="error-message">Password is required.</p>
+          } @else if (password.hasError('minlength')) {
+          <p class="error-message">
+            Password must be at least 6 characters long.
+          </p>
+          }
+        </div>
+        }
+
+        <!-- Submit -->
+        <ion-button
+          class="submit-btn buttons-style"
+          expand="block"
+          type="submit"
+          [disabled]="registerForm.invalid || isLoading()"
+        >
+          登録
+        </ion-button>
+
+        @if (errorMessage()) {
+        <p class="error-message" role="alert">{{ errorMessage() }}</p>
+        } @if (successMessage()) {
+        <p class="success-message" role="status">{{ successMessage() }}</p>
+        }
+      </form>
+
+      <!-- Login navigation -->
+      <p class="go-to-login">
+        既にアカウントをお持ちですか？
+        <a routerLink="/login">ログインする</a>
+      </p>
+
+      <!-- Facebook -->
+      <ion-button
+        expand="block"
+        type="button"
+        class="facebook-button buttons-style"
+        [disabled]="isLoading()"
+        (click)="tryRegisterFacebook()"
+      >
+        <ion-icon slot="start" name="logo-facebook"></ion-icon>
+        Facebookで続ける
+      </ion-button>
+
+      <!-- Google -->
+      <ion-button
+        expand="block"
+        type="button"
+        class="google-button buttons-style"
+        color="danger"
+        [disabled]="isLoading()"
+        (click)="tryRegisterGoogle()"
+      >
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        Googleで続ける
+      </ion-button>
+
+      <!-- Twitter / X -->
+      <ion-button
+        expand="block"
+        type="button"
+        class="twitter-button buttons-style"
+        color="secondary"
+        [disabled]="isLoading()"
+        (click)="tryRegisterTwitter()"
+      >
+        <ion-icon slot="start" name="logo-twitter"></ion-icon>
+        X (Twitter)で続ける
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
