@@ -1,0 +1,7 @@
+{
+  "name": "jobs-in-japan-modern",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
