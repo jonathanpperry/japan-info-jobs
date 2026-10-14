@@ -136,7 +136,7 @@ export class LoginPage {
       await loading.dismiss();
       loading = undefined;
 
-      await this.router.navigateByUrl('/menu', {
+      await this.router.navigateByUrl('/tabs/home', {
         replaceUrl: true,
       });
     } catch (error: unknown) {

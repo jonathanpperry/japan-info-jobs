@@ -143,7 +143,7 @@ export class RegisterPage {
       await loading.dismiss();
       loading = undefined;
 
-      const navigated = await this.router.navigateByUrl('/menu', {
+      const navigated = await this.router.navigateByUrl('/home', {
         replaceUrl: true,
       });
 
