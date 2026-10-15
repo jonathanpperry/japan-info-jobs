@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-resumes',
@@ -12,6 +19,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonButtons,
+    IonMenuButton,
     CommonModule,
     FormsModule,
   ],
@@ -19,5 +28,6 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 export class ResumesPage implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('ResumesPage initialized'); }
 }

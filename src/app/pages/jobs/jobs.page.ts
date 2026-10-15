@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
-
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonMenuButton
+} from '@ionic/angular';
 @Component({
   selector: 'app-jobs',
   templateUrl: './jobs.page.html',
@@ -14,6 +20,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
     IonToolbar,
     CommonModule,
     FormsModule,
+    IonButtons,
+    IonMenuButton,
   ],
 })
 
