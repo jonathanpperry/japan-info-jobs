@@ -12,7 +12,6 @@ const pendingRoutes = [
   'createresume',
   'editresume/:id',
   'filter-job-categories',
-  'firstwithtabs',
   'job',
   'job/:id',
   'menu/:id',
@@ -37,7 +36,8 @@ export const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadComponent: () => import('./pages/tabs/tabs.page').then((m) => m.TabsPage),
+    loadComponent: () =>
+      import('./pages/tabs/tabs.page').then((m) => m.TabsPage),
     children: [
       {
         path: 'home',
@@ -60,6 +60,11 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
     ],
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./pages/profile/profile.page').then((m) => m.ProfilePage),
   },
   {
     path: 'reset-password',

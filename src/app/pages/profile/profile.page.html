@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>プロフィールページ</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-input
+      label="Name"
+      labelPlacement="fixed"
+      class="profile-input"
+      [(ngModel)]="profile.name"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Email"
+      labelPlacement="fixed"
+      class="profile-input"
+      type="email"
+      [(ngModel)]="profile.email"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Date of Birth"
+      labelPlacement="fixed"
+      class="profile-input"
+      [(ngModel)]="profile.DOB"
+    ></ion-input>
+  </ion-item>
+
+  <ion-item [routerLink]="['/reset-password']"> Reset Password </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-row no-padding text-center>
+    <ion-col size="12" size-xl="5" offset-xl="3.5" size-md="8" offset-md="2">
+      <ion-button
+        expand="block"
+        (click)="updateProfile()"
+        [disabled]="isLoading || isSaving || !profileId"
+      >
+        保存
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

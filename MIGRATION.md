@@ -25,7 +25,6 @@ The original app's route map is preserved, but most original source files have n
 - `createresume`
 - `editresume/:id`
 - `filter-job-categories`
-- `firstwithtabs`
 - `job` and `job/:id`
 - `menu/:id`
 - `profile`

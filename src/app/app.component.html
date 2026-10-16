@@ -39,6 +39,17 @@
             <ion-label>設定 (Settings)</ion-label>
           </ion-item>
         </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item
+            button
+            lines="none"
+            [disabled]="isLoggingOut"
+            (click)="logout()"
+          >
+            <ion-label>ログアウト (Log Out)</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
       </ion-list>
     </ion-content>
   </ion-menu>
