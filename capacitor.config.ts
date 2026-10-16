@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'jobs-in-japan-modern',
+  appId: 'io.jonnyramen.japaninfojobs',
+  appName: 'Japan Info Jobs',
   webDir: 'www'
 };
 
