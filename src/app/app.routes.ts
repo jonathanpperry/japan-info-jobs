@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MigrationPlaceholderPage } from './pages/migration-placeholder.page';
+import { authenticatedGuard, guestGuard } from './guards/auth.guards';
 
 // Remove each path when its real standalone component is migrated.
 const pendingRoutes = [
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
+    canActivate: [guestGuard],
     loadComponent: () =>
       import('./pages/login/login.page').then((m) => m.LoginPage),
   },
@@ -36,6 +38,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs',
+    canActivate: [authenticatedGuard],
     loadComponent: () =>
       import('./pages/tabs/tabs.page').then((m) => m.TabsPage),
     children: [
@@ -63,6 +66,7 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
+    canActivate: [authenticatedGuard],
     loadComponent: () =>
       import('./pages/profile/profile.page').then((m) => m.ProfilePage),
   },
