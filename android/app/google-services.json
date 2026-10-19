@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "345035161377",
+    "firebase_url": "https://japan-info-jobs-43c65-default-rtdb.firebaseio.com",
+    "project_id": "japan-info-jobs-43c65",
+    "storage_bucket": "japan-info-jobs-43c65.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345035161377:android:de06b1d6b94b1e05880860",
+        "android_client_info": {
+          "package_name": "io.jonnyramen.japaninfojobs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxcGi-kyQX0wNucaPcXIQk42Rfh3LXVc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

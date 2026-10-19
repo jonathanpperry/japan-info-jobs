@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.jonnyramen.japaninfojobs;
 
 import com.getcapacitor.BridgeActivity;
 

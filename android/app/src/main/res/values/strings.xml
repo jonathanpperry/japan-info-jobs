@@ -1,7 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8' ?>
 <resources>
     <string name="app_name">Japan Info Jobs</string>
     <string name="title_activity_main">Japan Info Jobs</string>
     <string name="package_name">io.jonnyramen.japaninfojobs</string>
     <string name="custom_url_scheme">io.jonnyramen.japaninfojobs</string>
+    <string name="facebook_app_id">1652590936522478</string>
+    <string name="facebook_client_token">e8a0d44a690c0a188e8aceced1b4ba31</string>
+    <string name="fb_login_protocol_scheme">fb1652590936522478</string>
+
 </resources>
