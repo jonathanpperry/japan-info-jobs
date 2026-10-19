@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/jobs" />
+    </ion-buttons>
+
+    <ion-title> {{ job()?.jobTitle || '求人詳細' }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Loading state -->
+  @if (isLoading()) {
+  <div class="ion-text-center ion-padding">
+    <ion-spinner name="crescent" />
+    <p>Loading job details...</p>
+  </div>
+  }
+
+  <!-- Error state -->
+  @else if (errorMessage()) {
+  <div class="ion-text-center ion-padding" role="alert">
+    <p>{{ errorMessage() }}</p>
+
+    <ion-button (click)="loadJob()"> Retry </ion-button>
+  </div>
+  }
+
+  <!-- Job details -->
+  @else if (job(); as selectedJob) {
+
+  <ion-item>
+    <ion-label>
+      <h3>Title (求人名)</h3>
+      <p>{{ selectedJob.jobTitle }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Company (会社)</h3>
+      <p>{{ selectedJob.companyName }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Location (勤務地)</h3>
+      <p>{{ selectedJob.location }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Industry (業種)</h3>
+      <p>{{ selectedJob.industry }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Function (職種)</h3>
+      <p>{{ selectedJob.function }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Work Type (勤務形態)</h3>
+      <p>{{ selectedJob.workType }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Salary (給与)</h3>
+      <p>{{ selectedJob.salary }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Requirements (資格)</h3>
+      <p class="ion-text-wrap">{{ selectedJob.requirements }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Description (説明)</h3>
+      <p class="ion-text-wrap">{{ selectedJob.description }}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      <h3>Positions (ポジション)</h3>
+      <p>{{ selectedJob.positions }}</p>
+    </ion-label>
+  </ion-item>
+  }
+</ion-content>
+
+<!-- Application action -->
+@if (job(); as selectedJob) {
+<ion-footer>
+  <ion-toolbar>
+    <ion-button
+      expand="block"
+      color="primary"
+      [routerLink]="[
+          '/chooseresume',
+          selectedJob.id
+        ]"
+    >
+      <ion-icon name="add-circle-outline" slot="start" />
+      Apply (応募する)
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+}

@@ -1,0 +1,30 @@
+
+ion-item {
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  margin-bottom: 4px;
+}
+
+ion-label {
+  h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+}
+
+ion-footer {
+  ion-toolbar {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+  }
+}

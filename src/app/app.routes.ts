@@ -13,8 +13,6 @@ const pendingRoutes = [
   'createresume',
   'editresume/:id',
   'filter-job-categories',
-  'job',
-  'job/:id',
   'menu/:id',
   'profile',
   'resumes',
@@ -84,6 +82,14 @@ export const routes: Routes = [
   },
   { path: 'home', redirectTo: 'tabs/home', pathMatch: 'full' },
   { path: 'jobs', redirectTo: 'tabs/jobs', pathMatch: 'full' },
+  {
+    path: 'job/:id',
+    canActivate: [authenticatedGuard],
+    loadComponent: () =>
+      import('./pages/job-details/job-details.page').then(
+        (m) => m.JobDetailsPage
+      ),
+  },
   { path: 'resumes', redirectTo: 'tabs/resumes', pathMatch: 'full' },
   ...pendingRoutes.map((path) => ({
     path,
