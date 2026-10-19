@@ -42,6 +42,16 @@
 
         <ion-menu-toggle>
           <ion-item
+            routerLink="/bookmarks"
+            routerDirection="root"
+            detail="false"
+          >
+            <ion-label>保存した求人 (Saved Jobs)</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item
             button
             lines="none"
             [disabled]="isLoggingOut"

@@ -5,6 +5,15 @@
     </ion-buttons>
 
     <ion-title> {{ job()?.jobTitle || '求人詳細' }} </ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        routerLink="/bookmarks"
+        aria-label="Saved Jobs"
+        title="Saved Jobs"
+      >
+        <ion-icon name="bookmark-outline" slot="icon-only" />
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -105,6 +114,23 @@
 @if (job(); as selectedJob) {
 <ion-footer>
   <ion-toolbar>
+    @if (bookmarkError()) {
+    <p class="ion-padding" role="alert">{{ bookmarkError() }}</p>
+    }
+
+    <ion-button
+      expand="block"
+      fill="outline"
+      [disabled]="bookmarkBusy()"
+      (click)="toggleBookmark()"
+    >
+      <ion-icon
+        [name]="isSaved() ? 'bookmark' : 'bookmark-outline'"
+        slot="start"
+      />
+      {{ isSaved() ? 'Remove Bookmark (保存解除)' : 'Save Job (保存する)' }}
+    </ion-button>
+
     <ion-button
       expand="block"
       color="primary"

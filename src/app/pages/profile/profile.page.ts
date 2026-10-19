@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  inject,
+} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -17,6 +23,7 @@ import {
   IonRow,
   IonCol,
   IonButton,
+  IonSkeletonText,
   ToastController,
 } from '@ionic/angular';
 
@@ -47,11 +54,16 @@ import {
     IonRow,
     IonCol,
     IonButton,
+    IonSkeletonText
   ],
 })
 export class ProfilePage implements OnInit, OnDestroy {
   private readonly profileService = inject(ProfileService);
   private readonly toastController = inject(ToastController);
+
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  public loadError = false;
 
   public userFullName = '';
   public isLoading = true;
@@ -68,14 +80,18 @@ export class ProfilePage implements OnInit, OnDestroy {
   private destroyed = false;
 
   async ngOnInit(): Promise<void> {
+    await this.loadProfile();
+  }
+
+  public async loadProfile(): Promise<void> {
     this.isLoading = true;
+    this.loadError = false;
+    this.cdr.markForCheck();
 
     try {
       const existingProfile = await this.profileService.getOrCreateProfile();
 
-      if (this.destroyed) {
-        return;
-      }
+      if (this.destroyed) return;
 
       this.profileId = existingProfile.id;
 
@@ -91,10 +107,14 @@ export class ProfilePage implements OnInit, OnDestroy {
       console.error('Failed to load profile:', error);
 
       if (!this.destroyed) {
-        await this.showToast('Unable to load your profile.', 'danger');
+        this.loadError = true;
+        void this.showToast('Unable to load your profile.', 'danger');
       }
     } finally {
-      this.isLoading = false;
+      if (!this.destroyed) {
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      }
     }
   }
 

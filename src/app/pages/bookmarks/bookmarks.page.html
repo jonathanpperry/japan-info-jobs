@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/jobs" />
+    </ion-buttons>
+    <ion-title>保存した求人 / Saved Jobs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (loading()) {
+    <div class="ion-padding ion-text-center"><ion-spinner /><p>Loading saved jobs...</p></div>
+  } @else if (errorMessage()) {
+    <div class="ion-padding ion-text-center" role="alert">
+      <p>{{ errorMessage() }}</p>
+      <ion-button (click)="load()">Retry</ion-button>
+    </div>
+  } @else if (jobs().length === 0) {
+    <div class="ion-padding ion-text-center">
+      <ion-icon name="bookmark-outline" size="large" />
+      <p>No saved jobs yet. Browse jobs and tap Save Job to add one.</p>
+      <ion-button routerLink="/tabs/jobs">Browse Jobs</ion-button>
+    </div>
+  } @else {
+    <ion-list>
+      @for (job of jobs(); track job.id) {
+        <ion-item>
+          <ion-label (click)="open(job)" class="saved-job-label">
+            <h2>{{ job.jobTitle }}</h2>
+            <p>{{ job.companyName }} · {{ job.location }}</p>
+            <p>{{ job.salary }}</p>
+          </ion-label>
+          <ion-button slot="end" fill="clear" color="danger"
+            [disabled]="removingId() !== null" (click)="remove(job)"
+            [attr.aria-label]="'Remove bookmark for ' + job.jobTitle">
+            <ion-icon name="trash-outline" slot="icon-only" />
+          </ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

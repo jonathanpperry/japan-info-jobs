@@ -48,7 +48,8 @@ export class AppComponent {
       url === '/tabs' ||
       url.startsWith('/tabs/') ||
       url === '/profile' ||
-      url === '/settings'
+      url === '/settings' ||
+      url === '/bookmarks'
     );
   }
 

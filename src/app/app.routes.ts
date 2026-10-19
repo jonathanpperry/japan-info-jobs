@@ -75,11 +75,6 @@ export const routes: Routes = [
         (m) => m.ResetPasswordPage
       ),
   },
-  {
-    path: 'menu',
-    loadComponent: () =>
-      import('./pages/menu/menu.page').then((m) => m.MenuPage),
-  },
   { path: 'home', redirectTo: 'tabs/home', pathMatch: 'full' },
   { path: 'jobs', redirectTo: 'tabs/jobs', pathMatch: 'full' },
   {
@@ -91,6 +86,12 @@ export const routes: Routes = [
       ),
   },
   { path: 'resumes', redirectTo: 'tabs/resumes', pathMatch: 'full' },
+  {
+    path: 'bookmarks',
+    canActivate: [authenticatedGuard],
+    loadComponent: () =>
+      import('./pages/bookmarks/bookmarks.page').then((m) => m.BookmarksPage),
+  },
   ...pendingRoutes.map((path) => ({
     path,
     component: MigrationPlaceholderPage,
