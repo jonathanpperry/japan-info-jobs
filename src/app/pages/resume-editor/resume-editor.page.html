@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/resumes" [disabled]="busy()" />
+    </ion-buttons>
+    <ion-title>{{ readOnly ? 'Résumé' : id ? 'Edit résumé' : 'Create résumé' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (loading()) {
+    <p role="status">Loading résumé…</p>
+  } @else if (loadError()) {
+    <div role="alert">
+      <p>{{ loadError() }}</p>
+      <ion-button (click)="load()">Retry</ion-button>
+    </div>
+  } @else {
+    @if (readOnly) {
+      @for (field of fields; track field.key) {
+        <section>
+          <h2>{{ field.label }}</h2>
+          <p style="white-space: pre-wrap; overflow-wrap: anywhere">{{ values[field.key] }}</p>
+        </section>
+      }
+      <ion-button [routerLink]="['/editresume', id]" [disabled]="busy()">Edit résumé</ion-button>
+      <ion-button color="danger" fill="outline" (click)="confirmDelete()" [disabled]="busy()">
+        {{ busy() ? 'Deleting…' : 'Delete résumé' }}
+      </ion-button>
+    } @else {
+      <form #resumeForm="ngForm" (ngSubmit)="save(resumeForm)">
+        @for (field of fields; track field.key) {
+          <ion-item>
+            <ion-textarea
+              [label]="field.label"
+              labelPlacement="stacked"
+              [name]="field.key"
+              [(ngModel)]="values[field.key]"
+              [autoGrow]="true"
+              [rows]="field.key === 'title' ? 1 : 3"
+              [maxlength]="10000"
+              [disabled]="busy()"
+              required
+            />
+          </ion-item>
+        }
+        <ion-button type="submit" expand="block" [disabled]="busy()">
+          {{ busy() ? 'Saving…' : 'Save résumé' }}
+        </ion-button>
+        <ion-button routerLink="/tabs/resumes" fill="clear" [disabled]="busy()">Cancel</ion-button>
+      </form>
+    }
+    @if (actionError()) {
+      <p role="alert">{{ actionError() }}</p>
+    }
+  }
+</ion-content>
