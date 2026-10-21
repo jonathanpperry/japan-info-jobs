@@ -1,4 +1,3 @@
-// src/app/services/auth.service.ts
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
@@ -18,6 +17,7 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  OAuthProvider,
 } from 'firebase/auth';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { Observable, map, shareReplay } from 'rxjs';
@@ -83,21 +83,42 @@ export class AuthService {
   }
 
   doLogin(values: LoginCredentials): Promise<UserCredential> {
-    return signInWithEmailAndPassword(
-      this.auth,
-      values.email,
-      values.password
-    );
+    return signInWithEmailAndPassword(this.auth, values.email, values.password);
   }
 
   async doFacebookLogin(): Promise<UserCredential> {
     if (Capacitor.isNativePlatform()) {
+      const isIOS = Capacitor.getPlatform() === 'ios';
+
       const result = await FirebaseAuthentication.signInWithFacebook({
         skipNativeAuth: true,
+        useLimitedLogin: isIOS,
       });
+
+      if (isIOS) {
+        const idToken = result.credential?.idToken;
+        const nonce = result.credential?.nonce;
+
+        if (!idToken || !nonce) {
+          throw new Error(
+            'Facebook Limited Login did not return an ID token and nonce.'
+          );
+        }
+
+        const credential = new OAuthProvider('facebook.com').credential({
+          idToken,
+          rawNonce: nonce,
+        });
+
+        return this.completeSocialLogin(
+          signInWithCredential(this.auth, credential)
+        );
+      }
+
       const accessToken = result.credential?.accessToken;
+
       if (!accessToken) {
-        throw new Error('Facebook did not return an access token. Check native Facebook setup.');
+        throw new Error('Facebook did not return an access token.');
       }
 
       return this.completeSocialLogin(
@@ -120,14 +141,13 @@ export class AuthService {
       });
       const idToken = result.credential?.idToken;
       if (!idToken) {
-        throw new Error('Google did not return an ID token. Check native Google setup.');
+        throw new Error(
+          'Google did not return an ID token. Check native Google setup.'
+        );
       }
 
       return this.completeSocialLogin(
-        signInWithCredential(
-          this.auth,
-          GoogleAuthProvider.credential(idToken)
-        )
+        signInWithCredential(this.auth, GoogleAuthProvider.credential(idToken))
       );
     }
 
@@ -140,7 +160,9 @@ export class AuthService {
     if (Capacitor.isNativePlatform()) {
       // This provider requires platform-specific validation and setup.
       if (Capacitor.getPlatform() !== 'ios') {
-        throw new Error('Native X sign-in on Android requires a separate integration.');
+        throw new Error(
+          'Native X sign-in on Android requires a separate integration.'
+        );
       }
 
       const result = await FirebaseAuthentication.signInWithTwitter({
@@ -208,10 +230,7 @@ export class AuthService {
     return result;
   }
 
-  private async createUserProfile(
-    user: User,
-    name?: string
-  ): Promise<void> {
+  private async createUserProfile(user: User, name?: string): Promise<void> {
     await setDoc(
       doc(this.firestore, 'users', user.uid),
       {

@@ -1,13 +1,22 @@
-// Place at src/app/core/firebase.ts
+import { Capacitor } from '@capacitor/core';
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+  browserLocalPersistence,
+  getAuth,
+  indexedDBLocalPersistence,
+  initializeAuth,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { environment } from '../../environments/environment';
 
-// Change firebaseConfig to the property name in your environment file.
 export const firebaseApp = getApps().length
   ? getApp()
   : initializeApp(environment.firebaseConfig);
 
-export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseAuth = Capacitor.isNativePlatform()
+  ? initializeAuth(firebaseApp, {
+      persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+    })
+  : getAuth(firebaseApp);
+
 export const firebaseDb = getFirestore(firebaseApp);
