@@ -10,15 +10,12 @@ const pendingRoutes = [
   'chooseresume/:id',
   'confirm-apply',
   'confirm-apply/:id',
-  'createresume',
-  'editresume/:id',
   'filter-job-categories',
   'menu/:id',
   'profile',
   'resumes',
   'settings',
   'language-popover',
-  'resume/:id',
 ];
 
 export const routes: Routes = [
@@ -92,6 +89,15 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/bookmarks/bookmarks.page').then((m) => m.BookmarksPage),
   },
+  ...['createresume', 'editresume/:id', 'resume/:id'].map((path) => ({
+    path,
+    canActivate: [authenticatedGuard],
+    data: { readOnly: path === 'resume/:id' },
+    loadComponent: () =>
+      import('./pages/resume-editor/resume-editor.page').then(
+        (m) => m.ResumeEditorPage
+      ),
+  })),
   ...pendingRoutes.map((path) => ({
     path,
     component: MigrationPlaceholderPage,

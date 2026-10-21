@@ -1,17 +1,37 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button menu="main-menu"></ion-menu-button>
+    <ion-buttons slot="start"><ion-menu-button menu="main-menu" /></ion-buttons>
+    <ion-title>Résumés (履歴書)</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/createresume">Create</ion-button>
     </ion-buttons>
-
-    <ion-title>履歴書</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">resumes</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  @if (loading()) {
+    <p class="ion-padding" role="status">Loading your résumés…</p>
+  } @else if (error()) {
+    <div class="ion-padding" role="alert">
+      <p>{{ error() }}</p>
+      <ion-button (click)="load()">Retry</ion-button>
+    </div>
+  } @else if (resumes().length === 0) {
+    <div class="ion-padding ion-text-center">
+      <h2>No résumés yet</h2>
+      <p>Create a résumé to describe your skills and experience.</p>
+      <ion-button routerLink="/createresume">Create résumé</ion-button>
+    </div>
+  } @else {
+    <ion-list>
+      @for (resume of resumes(); track resume.id) {
+        <ion-item [routerLink]="['/resume', resume.id]" [detail]="true">
+          <ion-label>
+            <h2>{{ resume.title }}</h2>
+            <p>{{ resume.languageAbilities }}</p>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  }
 </ion-content>
